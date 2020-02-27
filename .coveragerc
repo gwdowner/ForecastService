@@ -2,4 +2,3 @@
 omit =
     env/*
     */test/*
-    */lib/site-packages/*
