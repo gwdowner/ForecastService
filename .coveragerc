@@ -2,3 +2,4 @@
 omit =
     env/*
     */test/*
+    home/*
