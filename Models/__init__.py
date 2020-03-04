@@ -1,2 +1,2 @@
-from .baseModel import BaseModel
+from .BaseModel import BaseModel
 from .NNModel import NNModel

@@ -1,4 +1,7 @@
-from Data import DataTransform, DataRequest
+import os
+from dotenv import load_dotenv
+load_dotenv()
+from Data import DataTransform, DataRequest, DBSingleton
 import Models.NNModel as NNModel
 import tensorflow as tf
 from tensorflow import keras
@@ -6,13 +9,14 @@ import tensorflow_docs as tfdocs
 import tensorflow_docs.plots
 import tensorflow_docs.modeling
 import threading
-import sys
+
 
 # Env variables
 EPOCHS = 10
-DB_CONNECTION = ''
-dataURL = ''
-
+DB_CONNECTION = os.getenv('DB_CONNECTION')
+dataURL =  os.getenv('DATA_SERVICE_URL')
+print(dataURL)
+DBSingleton(DB_CONNECTION)
 # get data
 dataSource = DataRequest.getData(dataURL)
 dataset = DataTransform.transform(dataSource)
@@ -53,6 +57,8 @@ print("saving model")
 meta = {
     'mae':repr(mae),
     'loss':repr(loss),
-    'mse':repr(mse)
+    'mse':repr(mse),
+    'norm_data':train_stats.to_dict()
 }
 NNModel.saveToDb(model, DB_CONNECTION, meta)
+

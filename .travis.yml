@@ -9,3 +9,7 @@ script:
   - pytest --cov
 after_success:
   - coveralls
+deploy:
+  provider: heroku
+  api_key: d38f8737-6edf-4681-80c6-c6d781b1c411
+  app: forcastservice

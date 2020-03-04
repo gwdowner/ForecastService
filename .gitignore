@@ -353,3 +353,4 @@ MigrationBackup/
 
 env
 *.h5
+.env

@@ -1,4 +1,4 @@
-from .baseModel import BaseModel
+from .BaseModel import BaseModel
 import tensorflow as tf
 from tensorflow import keras
 from tensorflow.keras import layers

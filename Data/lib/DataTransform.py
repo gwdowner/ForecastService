@@ -4,7 +4,6 @@ import datetime as dt
 class DataTransform():
     @staticmethod
     def normalise(x, stats):
-        
         return (x - stats['mean']) / stats['std']
 
     @staticmethod
