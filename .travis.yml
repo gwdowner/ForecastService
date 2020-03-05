@@ -15,8 +15,6 @@ after_success:
   - coveralls
 deploy:
   provider: script
-  script:
-    sh echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-    docker push $DOCKER_USERNAME/forecastservice
+  script: bash docker_push
   on:
     branch: master
