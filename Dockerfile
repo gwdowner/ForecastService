@@ -1,7 +1,7 @@
 FROM python:3.7.6
-WORKDIR /usr/src
+WORKDIR /usr/src/app
 RUN ls
-COPY . ./
+COPY . .
 #RUN pip install -r requirements.txt
 RUN ls -r
 ENTRYPOINT ["python"]
