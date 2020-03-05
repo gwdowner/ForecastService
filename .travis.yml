@@ -1,15 +1,15 @@
 language: python
 python:
   - "3.7"
+services:
+  - docker
 # command to install dependencies
 install:
   - pip install -r requirements.txt
 # command to run tests
 script:
   - pytest --cov
+  - docker build -t forcastservice:latest .
+  - docker ps
 after_success:
   - coveralls
-deploy:
-  provider: heroku
-  api_key: d38f8737-6edf-4681-80c6-c6d781b1c411
-  app: forcastservice
