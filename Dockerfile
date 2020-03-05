@@ -1,6 +1,6 @@
 FROM python:3.7.6
-COPY . /www
-WORKDIR /www
+COPY . .
+
 RUN pip install -r requirements.txt
 ENTRYPOINT ["python"]
 CMD ["server.py"]
