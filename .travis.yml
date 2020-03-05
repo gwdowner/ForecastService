@@ -9,7 +9,7 @@ install:
 # command to run tests
 script:
   - pytest --cov
-  - docker build -t forcastservice:latest .
-  - docker ps
+  - docker build -t forecastservice:latest .
+  - docker images
 after_success:
   - coveralls
