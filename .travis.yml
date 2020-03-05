@@ -9,7 +9,7 @@ install:
 # command to run tests
 script:
   - pytest --cov
-  - docker build -t forecastservice:latest .
+  - docker build -t gwdowner/forecastservice:latest .
   - docker images
 after_success:
   - coveralls
