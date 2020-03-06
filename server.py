@@ -8,7 +8,7 @@ from Data import DBSingleton
 DBSingleton(os.getenv('DB_CONNECTION'))
 from Server.forecast import forecastApi
 
-PORT = 3002
+PORT = os.getenv('PORT')
 
 app = Flask(__name__)
 app.register_blueprint(forecastApi)
@@ -22,4 +22,4 @@ def hello():
 ## run application
 ##app.run(port=PORT)
 if __name__ == '__main__':
-    app.run()
+    app.run(port=PORT)
