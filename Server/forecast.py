@@ -22,8 +22,9 @@ def mergeForecastWithPrediction(a, b):
 @forecastApi.route('/')
 def get_all():
     ## Tempory read in data ##
-    uri = os.getenv('DATA_SERVICE_URL') 
-    rawData = DataRequest.getData('{uri}/api/data/forecast'.format(uri=uri))
+    url = os.getenv('DATA_SERVICE_URL') 
+    uri = '{url}/api/data/forecast'.format(url=url)
+    rawData = DataRequest.getData(uri)
     # print(tmpData)
     # data = [DataRequest.getData('{uri}/api/data/'.format(uri=uri))[0]]
     # print(data)
