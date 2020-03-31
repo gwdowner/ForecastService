@@ -4,5 +4,4 @@ COPY . .
 RUN pip install -r requirements.txt
 ENV PORT=8080
 EXPOSE 8080
-ENTRYPOINT ["python"]
-CMD ["server.py"]
+CMD ["/bin/bash", "./container.start.sh"]
