@@ -4,7 +4,6 @@ load_dotenv()
 from flask import Flask, jsonify
 from Data import DBSingleton 
 
-print('connection string == ' + os.getenv('DB_CONNECTION'))
 # We must first import the connection
 DBSingleton(os.getenv('DB_CONNECTION'))
 from Server.forecast import forecastApi

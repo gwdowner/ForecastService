@@ -12,13 +12,13 @@ import threading
 
 
 # Env variables
-EPOCHS = 10
+EPOCHS = 10000
 DB_CONNECTION = os.getenv('DB_CONNECTION')
 dataURL =  os.getenv('DATA_SERVICE_URL')
-print(dataURL)
+
 DBSingleton(DB_CONNECTION)
 # get data
-dataSource = DataRequest.getData(dataURL)
+dataSource = DataRequest.getData('{url}/api/data/'.format(url=dataURL))
 dataset = DataTransform.transform(dataSource)
 
 # Sample from dataset to create training and verification dataset
@@ -35,9 +35,9 @@ train_stats = train_stats.transpose()
 
 normed_train_data = DataTransform.normalise(train_dataset, train_stats)
 normed_test_data = DataTransform.normalise(test_dataset, train_stats)
- 
+
 # Build the model
-model = NNModel.buildModel(train_dataset.keys(), hidden_nodes=32)
+model = NNModel.buildModel(train_dataset.keys(), hidden_layers=3, hidden_nodes=32)
 
 # Train model
 early_stop = keras.callbacks.EarlyStopping(
@@ -58,7 +58,7 @@ meta = {
     'mae':repr(mae),
     'loss':repr(loss),
     'mse':repr(mse),
-    'norm_data':train_stats.to_dict()
+    'norm_data':train_stats.to_json(orient='split')
 }
 NNModel.saveToDb(model, DB_CONNECTION, meta)
 
