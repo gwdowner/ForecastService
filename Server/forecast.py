@@ -1,5 +1,6 @@
 import os
 from flask import Blueprint
+from functools import reduce
 from Models import BaseModel
 from Data import DBSingleton, DataTransform, DataRequest
 import json
@@ -27,6 +28,13 @@ def mapRemoveRegion(a):
         'solarMW': a['solarMW']
     }
 
+def reduceRegional(acc, curr):
+    matchingEntries = next((x for x in acc if x['time'] == curr['time']), 0)
+    if matchingEntries:
+        matchingEntries['solarMW'] += curr['solarMW']
+    else:
+        acc.append(mapRemoveRegion(curr))
+    return acc
 
 @forecastApi.route('/')
 def get_all():
@@ -42,13 +50,20 @@ def get_all():
     regions = DataRequest.getData('{url}/api/data/regions'.format(url=baseurl))
     mergedData = list(map(mergeForecastWithPrediction, prediction, rawData))
     rtnRegions = []
-
+    sumOfRegions = reduce(reduceRegional,mergedData, [])
     for r in regions:
-        tmpFilter = map(mapRemoveRegion, filter(
-            lambda x: x['region'] == r['pes_id'], mergedData))
-        rtnRegions.append({
-            'region': r['pes_id'],
-            'forecast': list(tmpFilter)
-        })
+        if r['pes_id'] == 0:
+             rtnRegions.append({
+                'region': r['pes_id'],
+                'forecast': sumOfRegions
+            })
+        else:
+            tmpFilter = map(mapRemoveRegion, filter(
+                lambda x: x['region'] == r['pes_id'], mergedData))
+            
+            rtnRegions.append({
+                'region': r['pes_id'],
+                'forecast': list(tmpFilter)
+            })
 
     return {'prediction': rtnRegions}
