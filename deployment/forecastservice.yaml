@@ -25,7 +25,7 @@ spec:
       - name: forecastservice
         envFrom:
           - secretRef:
-              name: forecast-service-secrets
+              name: forecast-service
         image: gwdowner/forecastservice
         imagePullPolicy: Always
         resources: {}
